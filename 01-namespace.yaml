@@ -4,5 +4,5 @@ metadata:
  name: roboshop
  labels:
   project: roboshop
-   environment: dev
-   purpose: learning
+  environment: dev
+  purpose: learning
