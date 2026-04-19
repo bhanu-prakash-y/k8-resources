@@ -1,3 +1,4 @@
+## pv
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -15,6 +16,7 @@ spec:
     volumeHandle: efs:fs-0232fee541e3808f1
 
 ---
+###pvc
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -25,4 +27,24 @@ spec:
   storageClassName: ""
   resources:
     requests:
-      storage: 5Gi    
+      storage: 5Gi
+
+---
+###pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - name: html-data
+      mountPath: /usr/share/nginx/html
+  nodeSelector:
+    topology.kubernetes.io/zone: us-east-1d
+  volumes:
+  - name: html-data
+    persistentVolumeClaim:
+      claimName: efs-static      
